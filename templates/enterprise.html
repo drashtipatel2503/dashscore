@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashscore</title>
+
+  
+  <meta charset="utf-8">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.0.1/tailwind.min.css'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link type="stylesheets" href="{{ url_for('static', filename='styles.css')}}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.4.1.min.js')}}"></script>
+  <link type="stylesheet" href="{{ url_for('static', filename='styles.css')}}"></link>
+  <link type="stylesheets" href="static/styles.css"></link>
+</head>
+<style>
+    body{
+        background-color: #f4e1f8;
+        color:purple;
+    }
+    .container{
+        background-color:white;
+    
+        border: 1px solid lightgrey;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        padding:2%;
+        box-shadow: 2px 2px 2px 2px lightgray;
+
+
+    }
+    .center{
+        text-align: center;
+        width:100%;
+    }
+    h3{
+        text-align: center;
+        color:purple;
+        width:100%;
+        margin-bottom:5em;
+    }
+    label{
+        color:gray;
+        font-size: 90%;
+        text-align:left;
+        margin-bottom:2em;
+        width:100%;
+    }
+    .center{
+        width:100%;
+        text-align:center;
+        
+    }
+    .btn{
+        background-color:purple;
+        color:white;
+        width:50%;
+        margin-left: 24%;
+        border-radius: 30px;
+    }
+    nav{
+      padding:2%;
+
+    }
+    .left{
+      width:100%;
+      text-align: right;
+    }
+    .right{
+      justify-items: right;
+      
+      align-items:right;
+    } body{
+        background-color: #f4e1f8;
+        color:purple;
+    }
+</style>
+<body id="body">
+  <nav class="navbar navbar-default">
+  
+    <span class="left">Manage<i  style="font-size: 90%;margin:1%;" class="fa fa-angle-down"></i> <i  style="margin-left: 2%;" class="fa fa-bars"></i></span>
+  
+  
+  </nav>  <div class="container">
+
+        <div class="row center" >
+            <label class="center">My business</label>
+        </div>
+        
+        <div class="row">
+            <h3>{{name}}</h3>
+        </div>
+        <div class="row">
+            <label ><b style="width:100%">Tell us which area would you like to look for?</b></label>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-4">
+
+
+                <a href="settarget"><label><i style="margin:1%;" class="fa fa-circle-o"></i>Set targets</label><br></a>
+                <a href="setsale"><label><i style="margin:1%;" class="fa fa-circle-o"></i>Set Production and Sales</label></a>
+
+            </div>
+        
+        
+            <div class="col-12 col-sm-4">
+                <a href="setbudget"><label><i style="margin:1%;" class="fa fa-circle-o"></i>Manage Your Budget</label><br></a>
+                <a href="addnetcost"><label><i style="margin:1%;" class="fa fa-circle-o"></i>Track your expenditure</label></a>
+                
+            </div>
+        
+        
+            <div class="col-12 col-sm-4">
+                <a href="feedback"><label><i style="margin:1%;" class="fa fa-circle-o"></i>Feedback analysis</label><br></a>
+                <a href="generatereport"><label><i style="margin:1%;" class="fa fa-circle-o"></i>Generate Reports</label></a>
+                
+            </div>
+        </div>
+
+      </div>
+</body>
+</html>

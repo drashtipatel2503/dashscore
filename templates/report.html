@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Profile</title>
+
+  
+  <meta charset="utf-8">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.0.1/tailwind.min.css'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link type="stylesheets" href="{{ url_for('static', filename='styles.css')}}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.4.1.min.js')}}"></script>
+  <link type="stylesheet" href="{{ url_for('static', filename='styles.css')}}"></link>
+  <link type="stylesheets" href="static/styles.css"></link>
+</head>
+<style>
+    body{
+        background-color: #f4e1f8;
+        color:purple;
+    }
+    .b{
+        margin-top:1%;
+
+    }
+    .d{
+        align-items: space-around;
+    }
+    .c{
+        margin-top:1%
+
+    }
+    .a{
+        background-color: white;
+        border:1px solid black;
+        margin-left:2%;
+        justify-content: center;
+        padding:1%;
+        border-top-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow:2px 2px rgb(248, 145, 248);
+            }
+    h3, label{
+        margin:1%;
+        text-align: center;
+        width:100%;
+        
+    }
+    .fluid-container{
+        margin:2%;
+    }
+</style>
+<body id="body">
+  
+    <div class="fluid-container">
+          <div class="row">
+              <div class="col-12 col-sm-2 a">
+                    <label>Yearly Production</label>
+                    <h3>{{yp}}</h3>
+                </div>
+                <div class="col-12 col-sm-2 a">
+                    <label>Yearly Sales</label>
+                    <h3>{{ys}}</h3>
+                </div>
+                <div class="col-12 col-sm-2 a">
+                    <label>Yearly Expenditure</label>
+                    <h3>{{exp}}</h3>
+                </div>
+                <div class="col-12 col-sm-2 a">
+                    <label>Net allocated Budget</label>
+                    <h3>{{budget}}</h3>
+                </div>
+                <div class="col-12 col-sm-2 a">
+                    <label>Customers Satisfied</label>
+                    <h3>{{cs}}</h3>
+                </div>
+                
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-3 b">
+                <img src="/plot/b">
+            </div>
+            <div class="col-12 col-sm-3 b">
+            <img src="/plot/csl">
+            </div>
+            <div class="col-12 col-sm-3 b">
+            <img src="/plot/eb1">
+            </div>
+            <div class="col-12 col-sm-3 b">
+            <img src="/plot/nc">
+            </div>
+          </div>
+          
+          <div class="row d">
+            <div class="col-12 col-sm-4 c ">
+                <img src="/plot/pvs">
+            </div>
+            <div class="col-12 col-sm-4 c ">
+                <img src="/plot/pvt">
+            </div>
+            <div class="col-12 col-sm c">
+            <img src="/plot/eb">
+            </div>
+            </div>
+    </div>
+</body>
+</html>

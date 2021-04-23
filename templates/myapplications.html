@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Profile</title>
+
+  
+  <meta charset="utf-8">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.0.1/tailwind.min.css'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link type="stylesheets" href="{{ url_for('static', filename='styles.css')}}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.4.1.min.js')}}"></script>
+  <link type="stylesheet" href="{{ url_for('static', filename='styles.css')}}"></link>
+  <link type="stylesheets" href="static/styles.css"></link>
+</head>
+<style>
+    body{
+        background-color: #EAEDF0;
+    }
+    .container{
+        background-color:white;
+        min-height:100vh;
+        
+        border: 1px solid lightgrey;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        
+        box-shadow: 2px 2px 2px 2px lightgray;
+
+
+    }
+    .center{
+        text-align: center;
+        width:100%;
+    }
+    h3{
+        color:blue;
+        text-align: center;
+    }
+    label{
+        color:gray;
+        font-size: 90%;
+    }
+    .btn{
+        background-color:blue;
+        color:white;
+        width:50%;
+        margin-left: 24%;
+        border-radius: 30px;
+    }
+    
+    label{
+        text-align: center;
+        width:100%;
+        margin:1;
+    }
+    h3{
+    }
+    a{
+        text-align:center;
+        width:100%;
+    }
+    .mainview{
+        min-height:80vh;
+    }
+    .bottom{
+        position:fixed;
+        bottom:0;
+        width:80%;
+
+    }
+    nav{
+      padding:2%;
+      width:100%;
+
+    }
+    .left{
+      width:100%;
+      text-align: right;
+      margin-left:18em;
+    
+    }
+    .right{
+      justify-content: space-between;
+      align-content: right;
+      
+      align-items:right;
+    }
+  
+</style>
+<body id="body">
+        <div class="row">
+          <div class="col-12 col-sm-4" ></div>
+          <div class="col-12 col-sm-4" ></div>
+          <div class="col-12 col-sm-4 right">
+            <span class="left">Intern View <i style="margin-left: 6%;" class="fa fa-bars"></i></span>
+          </div>
+        </div>
+        <div class="row">
+          <i class="fa fa-arrow-left"></i>
+        </div>
+      
+      <div class="container">
+
+            <h3 style="font-weight:bolder"> My virtual startups</h3><br><br>
+            {% for i in range(0, lr) %}
+               <div class="row" style="padding:2%;">
+                   <label>Startup {{i}}</label>
+                   <br>
+                   <a href="startupdetail?id={{data[i][0]}}">
+                   <h3 style="width:100%;"> {{data[i][2]}}</h3>
+                </a>
+
+    
+               </div> 
+            {% endfor %}
+               <div class="row bottom ">
+                   <a href=""><h3 >Apply to a Virtual Startup</h3></a>
+               </div>
+               
+        </div>
+</body>
+</html>

@@ -1,0 +1,300 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr  5 09:35:56 2021
+
+@author: DRASHTI
+"""
+
+
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Mar 28 11:30:38 2021
+
+@author: DRASHTI
+"""
+
+
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Mar 19 23:23:06 2021
+
+@author: DRASHTI
+"""
+
+import pymysql
+import hashlib
+
+import base64
+import datetime
+
+from flask import Flask, render_template,request, redirect, session
+from flask_mysqldb import MySQL
+
+
+import psycopg2
+try: 
+    conn = psycopg2.connect(database="vsp", user="postgres",  
+    password="drashti", host="localhost", port="5432")
+    print("connected")
+    
+
+except:
+    print ("I am unable to connect to the database")
+
+conn.autocommit=True
+
+
+mysql=MySQL()
+app=Flask(__name__)
+
+app.secret_key=hashlib.sha1('abcdef'.encode()).hexdigest()
+msg=""
+
+  
+@app.route('/')
+def main():
+    return render_template('home_founder.html')
+@app.route('/homeintern')
+def homeintern():
+    return render_template('home_intern.html')
+
+@app.route('/login')
+def login():
+    return render_template('login_founder.html')
+
+@app.route('/register')
+def register():
+    return render_template('register_founder.html')
+
+@app.route('/loginintern')
+def loginintern():
+    return render_template('login_intern.html')
+
+
+
+@app.route('/registerintern')
+def registerintern():
+    return render_template('register_intern.html')
+
+
+@app.route('/addnew')
+def addnew():
+    return render_template('add_new_startup_detail.html')
+
+@app.route('/registeruser', methods=["POST"])
+def registeruser():
+        name=request.form["name"]
+        password=request.form["password"]
+        number=request.form["number"]
+        cpassword=request.form["cpassword"]
+        email=request.form["email"]
+        session['email']=email 
+        
+        session['name']=name 
+        print("this")
+        
+        time=datetime.datetime.now()
+        
+        
+        if password==cpassword:
+            
+            cur=conn.cursor()
+            q=cur.execute("Select email from registeration where email LIKE %s", [email])
+            q=cur.fetchone()
+            print(q)
+            if q!=None:
+                msg="Email already registered"                
+                return render_template('register_founder.html' , msg=msg)
+            
+            else:
+                cur=conn.cursor()
+                cur.execute("Insert into registeration ( name , num ,  email ,  password , last_update ) values(%s,%s, %s, %s,%s)", (name,number,  email, password,time))
+                p=cur.lastrowid
+                session['uid']=p 
+                conn.autocommit
+                cur.close()
+                return render_template('login_founder.html')
+                        
+                   
+        else:
+            msg="Password and Confirm Password does not match"
+            return render_template('register_founder.html' , msg=msg)
+        
+
+@app.route('/registeruserasintern', methods=["POST"])
+def registeruserasintern():
+        name=request.form["name"]
+        password=request.form["password"]
+        number=request.form["number"]
+        cpassword=request.form["cpassword"]
+        email=request.form["email"]
+        
+        if password==cpassword:
+            
+            cur=conn.cursor()
+            q=cur.execute("Select  email  from intern where  email  LIKE %s", [email])
+            q=cur.fetchall()
+            
+            if len(q)!=0:
+                msg="Email already registered"                
+                return render_template('register_intern.html' , msg=msg)
+            
+            else:
+                cur=conn.cursor()
+                cur.execute("Insert into intern ( name , num ,  email ,  password ) values(%s,%s, %s, %s)", (name,number,  email, password))
+                p=cur.lastrowid
+                session['fid']=p 
+                conn.autocommit=True
+                cur.close()
+                return render_template('register_intern_more_details.html')
+                        
+                   
+        else:
+            msg="Password and Confirm Password does not match"
+            return render_template('register_intern.html' , msg=msg)
+
+
+@app.route('/loginuser', methods=["POST"])
+def loginuser():
+        password=request.form["password"]
+       
+        email=request.form["email"]
+        session['email']=email
+    
+        cur=conn.cursor()
+        q=cur.execute("Select * from founder where  email  LIKE %s", [email])
+        q=cur.fetchone()
+        
+        if (q[4])==password:
+            session['fid']=q[0]
+            cur.close()
+            return redirect('mystartups')
+        else:
+            cur.close()
+            msg="Please try again"
+            print("enter correct password")
+            return render_template('login_founder.html', msg=msg)
+            
+@app.route('/loginuserasintern', methods=["POST"])
+def loginuserasintern():
+        password=request.form["password"]
+       
+        email=request.form["email"]
+        session['email']=email
+    
+        cur=conn.cursor()
+        q=cur.execute("Select * from intern where  email  LIKE %s", [email])
+        q=cur.fetchone()
+        
+        if (q[3])==password:
+            session['fid']=q[0]
+            cur.close()
+            return redirect('myapplications')
+        else:
+            cur.close()
+            msg="Please try again"
+            print("enter correct password")
+            return render_template('login_intern.html', msg=msg)
+            
+          
+           
+
+
+@app.route('/addnewstartupdetail', methods=["POST"])
+def addnewstartupdetail():
+                title=request.form["title"]
+                painarea=request.form["painarea"]
+                solution=request.form["solution"]
+                fid=session['fid']
+                
+                cur=conn.cursor()
+                cur.execute("Insert into startup ( fid , title ,  painarea ,  solution ) values(%s,%s, %s, %s)", (fid,title,  painarea, solution))
+                p=cur.lastrowid
+                session['sid']=p
+                cur.execute("Insert into founder_startup ( fid , sid ) values(%s,%s)", (fid, p))
+                
+                conn.autocommit=True
+                cur.close()
+                return render_template('add_new_startup.html')
+        
+@app.route('/registeruserasinterndetails', methods=["POST"])
+def registeruserasinterndetails():
+                city=request.form["city"]
+                state=request.form["state"]
+                skills=request.form["skills"]
+                college=request.form["college"]
+                
+                education=request.form["education"]
+                stream=request.form["stream"]
+                sem=request.form["sem"]
+                fid=session['fid']
+                
+                cur=conn.cursor()
+                cur.execute("Insert into intern ( city , state ,  skills , college , education , stream , sem ) values(%s,%s, %s, %s,%s, %s, %s)", (city,state,  skills, college,education, stream, sem))
+                p=cur.lastrowid
+                session['sid']=p
+                cur.execute("Insert into intern_startup ( iid , sid ) values(%s,%s)", (fid, p))
+                
+                conn.autocommit=True
+                cur.close()
+                return render_template('myapplications.html')
+        
+
+@app.route('/addnewstartupdetail2', methods=["POST"])
+def addnewstartupdetail2():
+                industry=request.form["industry"]
+                projectname=request.form["projectname"]
+                skills=request.form["skills"]
+                tools=request.form["tools"]
+                sid=session['sid']
+                
+                cur=conn.cursor()
+                cur.execute("Update startup SET industry=%s, projectname=%s , skills=%s, tools=%s WHERE id=%s" ,(industry,projectname, skills, tools, sid))
+                
+                conn.autocommit=True
+                cur.close()
+                return redirect('mystartups')
+@app.route('/mystartups')
+def mystartups():
+    fid=session['fid']
+    cur=conn.cursor()
+    q=cur.execute("Select sid from founder_startup where  fid  LIKE %s", [fid])
+    q=cur.fetchall()
+    data=[]
+    for i in range(len(q)):
+        q1=cur.execute("Select * from startup where  id  LIKE %s", [q[i]])
+        q1=cur.fetchone()
+        data.append(q1)
+    lr=len(data)
+    return render_template('mystartups.html', data=data, lr=lr)
+
+
+@app.route('/myapplications')
+def myapplications():
+    iid=session['fid']
+    cur=conn.cursor()
+    q=cur.execute("Select sid from intern_startup where  iid  LIKE %s", [iid])
+    q=cur.fetchall()
+    data=[]
+    for i in range(len(q)):
+        q1=cur.execute("Select * from startup where  id  LIKE %s", [q[i]])
+        q1=cur.fetchone()
+        data.append(q1)
+    lr=len(data)
+    return render_template('myapplications.html', data=data, lr=lr)
+
+@app.route('/startupdetail')            
+def startupdetail():
+    print("this")
+    sid=request.args.get('id', type=int)
+    print(sid)
+    cur=conn.cursor()
+    q=cur.execute("Select * from startup where  id  LIKE %s", [sid])
+    q=cur.fetchone()
+    data=q
+    return render_template('startup_detail.html', data=data)
+ 
+if __name__=='__main__':
+    app.run(debug=True, use_reloader=False)
+    
+ 
